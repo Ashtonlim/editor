@@ -40,6 +40,17 @@ const MenuBar = ({ editor }) => {
   const [fileName, setFileName] = useState("");
 
   // Handle file selection
+  const testConvert = () => {
+    const markdown = `
+    # Header 1 
+    This is some **bold** text, and this is some _italic_ text.\<br>- List item 1\n- List item 2
+    `;
+    converter.setOption("tables", true);
+    converter.setOption("parseImgDimensions", true);
+    const htmlFromMarkdown = converter.makeHtml(markdown);
+    console.log(htmlFromMarkdown);
+  };
+
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     console.log(selectedFile);
@@ -280,10 +291,11 @@ const MenuBar = ({ editor }) => {
         </button>
         <button
           onClick={() => {
-            // const url = window.prompt("URL");
-            // const res = inputFile.current.click();
-            // if (filename) {
-            // }
+            const url = window.prompt("URL");
+
+            if (url) {
+              editor.chain().focus().setImage({ src: url }).run();
+            }
           }}
         >
           Add image from URL
@@ -344,6 +356,7 @@ const MenuBar = ({ editor }) => {
 
         {fileName && <p>Selected file: {fileName}</p>}
       </div>
+      <button onClick={testConvert}>Convert</button>
     </div>
   );
 };

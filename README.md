@@ -6,6 +6,10 @@ copy file to a temporary folder and save the relative path.
 
 Text modification to put the link into the object.
 
+### Notes
+
+**Chrome version used by jxbrowser = 69.0.3497.12**
+
 # TODO
 
 1. java call jxbrowser

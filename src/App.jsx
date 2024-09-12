@@ -130,16 +130,6 @@ function App() {
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
-      <div>
-        <input type="file" accept="image/*" onChange={handleFileChange} />
-        {image && (
-          <img
-            src={image}
-            alt="Uploaded"
-            style={{ maxWidth: "500px", maxHeight: "500px" }}
-          />
-        )}
-      </div>
       <div style={{ width: "80%" }}>
         <MenuBar editor={editor} />
         <EditorContent editor={editor} />
