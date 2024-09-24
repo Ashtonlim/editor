@@ -5,6 +5,8 @@ import { viteSingleFile } from "vite-plugin-singlefile";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), viteSingleFile()],
-  // base: "/editor/",
-  // base: "./",
+  build: {
+    outDir: "../gedit/app/src/main/resources/markdownEditor",
+    emptyOutDir: false,
+  },
 });

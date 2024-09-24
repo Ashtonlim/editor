@@ -126,21 +126,30 @@ const MenuBar = ({ editor }) => {
     <div className="control-group">
       <div className="button-group">
         <button
-          onClick={() => editor.chain().focus().toggleBold().run()}
+          onClick={() => {
+            console.log("Bold");
+            editor.chain().focus().toggleBold().run();
+          }}
           disabled={!editor.can().chain().focus().toggleBold().run()}
           className={editor.isActive("bold") ? "is-active" : ""}
         >
           Bold
         </button>
         <button
-          onClick={() => editor.chain().focus().toggleItalic().run()}
+          onClick={() => {
+            console.log("Italic");
+            editor.chain().focus().toggleItalic().run();
+          }}
           disabled={!editor.can().chain().focus().toggleItalic().run()}
           className={editor.isActive("italic") ? "is-active" : ""}
         >
           Italic
         </button>
         <button
-          onClick={() => editor.chain().focus().toggleStrike().run()}
+          onClick={() => {
+            console.log("Strike");
+            editor.chain().focus().toggleStrike().run();
+          }}
           disabled={!editor.can().chain().focus().toggleStrike().run()}
           className={editor.isActive("strike") ? "is-active" : ""}
         >
