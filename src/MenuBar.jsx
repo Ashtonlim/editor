@@ -1,7 +1,4 @@
-import TurndownService from "turndown";
-import tables from "./table";
-import { useCallback, useState, useRef } from "react";
-import Showdown from "showdown";
+import { useCallback, useState } from "react";
 
 export const tableHTML = `
   <table style="width:100%">
@@ -29,27 +26,11 @@ export const tableHTML = `
 `;
 
 const MenuBar = ({ editor }) => {
-  const converter = new Showdown.Converter();
-  const turndownService = new TurndownService();
-  turndownService.use([tables]);
-  const inputFile = useRef(null);
-
-  const [markdown, setmarkdown] = useState("");
-
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");
 
   // Handle file selection
-  const testConvert = () => {
-    const markdown = `
-    # Header 1 
-    This is some **bold** text, and this is some _italic_ text.\<br>- List item 1\n- List item 2
-    `;
-    converter.setOption("tables", true);
-    converter.setOption("parseImgDimensions", true);
-    const htmlFromMarkdown = converter.makeHtml(markdown);
-    console.log(htmlFromMarkdown);
-  };
+  // const testConvert = () => {};
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -365,7 +346,6 @@ const MenuBar = ({ editor }) => {
 
         {fileName && <p>Selected file: {fileName}</p>}
       </div>
-      <button onClick={testConvert}>Convert</button>
     </div>
   );
 };

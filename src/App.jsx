@@ -12,6 +12,10 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import MenuBar from "./MenuBar";
 import { useState, useEffect } from "react";
 import Showdown from "showdown";
+
+import TurndownService from "turndown";
+import tables from "./table";
+
 const CustomTableCell = TableCell.extend({
   addAttributes() {
     return {
@@ -34,11 +38,19 @@ const CustomTableCell = TableCell.extend({
 });
 
 function App() {
-  const [image, setImage] = useState(null);
-  const [mdContent, setmdContent] = useState("");
-  const [mdContentAsHTML, setmdContentAsHTML] = useState("");
+  const [content, setcontent] = useState("");
+  const turndownService = new TurndownService();
+  turndownService.use([tables]);
 
   const editor = useEditor({
+    onUpdate({ editor }) {
+      const newHtml = editor.getHTML();
+      const newMD = turndownService.turndown(newHtml);
+
+      console.log(newHtml);
+      console.log(newMD);
+      localStorage.setItem("editedMarkdown", newMD);
+    },
     extensions: [
       TextStyle.configure({ types: [ListItem.name] }),
       StarterKit.configure({
@@ -64,7 +76,7 @@ function App() {
         defaultProtocol: "https",
       }),
     ],
-    content: mdContentAsHTML,
+    content,
   });
 
   useEffect(() => {
@@ -72,32 +84,17 @@ function App() {
     converter.setOption("tables", true);
     converter.setOption("parseImgDimensions", true);
 
-    const mditem = localStorage.getItem("markdown");
-    const mdAsHtml = converter.makeHtml(mditem);
+    const injectedMarkdown = localStorage.getItem("injectedMarkdown");
+    localStorage.setItem("editedMarkdown", injectedMarkdown);
 
-    console.log(mditem);
+    const mdAsHtml = converter.makeHtml(injectedMarkdown);
+
+    console.log(injectedMarkdown);
     console.log(mdAsHtml);
 
-    setmdContentAsHTML(mdAsHtml);
+    setcontent(mdAsHtml);
     editor.commands.setContent(mdAsHtml);
-
-    // setTimeout(()  => {
-    //   const mditem = localStorage.getItem("markdown");
-    //   console.log(mditem);
-    //   setmd(mditem);
-    // }, 2000)
   }, []);
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -105,7 +102,7 @@ function App() {
         <MenuBar editor={editor} />
         <EditorContent editor={editor} />
       </div>
-      <div>{mdContent}</div>
+      {/* <div>{mdContent}</div> */}
     </div>
   );
 }
