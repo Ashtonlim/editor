@@ -27,3 +27,5 @@ src/Extensions/**/CHANGELOG.md
 src/Extensions/**/package.json
 src/Extensions/**/README.md
 src/Extensions/**/rollup.config.js
+
+dist/**
