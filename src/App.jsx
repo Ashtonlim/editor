@@ -1,19 +1,29 @@
-import ListItem from "@tiptap/extension-list-item";
-import TextStyle from "@tiptap/extension-text-style";
-import Image from "@tiptap/extension-image";
-import Link from "@tiptap/extension-link";
-import Table from "@tiptap/extension-table";
-import TableCell from "@tiptap/extension-table-cell";
-import TableHeader from "@tiptap/extension-table-header";
-import TableRow from "@tiptap/extension-table-row";
-import StarterKit from "@tiptap/starter-kit";
-import { EditorContent, useEditor } from "@tiptap/react";
-import MenuBar from "./MenuBar";
-import { useState, useEffect } from "react";
-import Showdown from "showdown";
+// import TableCell from "@tiptap/extension-table-cell";
+// import TableHeader from "@tiptap/extension-table-header";
+// import TableRow from "@tiptap/extension-table-row";
+// import ListItem from "@tiptap/extension-list-item";
+// import TextStyle from "@tiptap/extension-text-style";
+// import Image from "@tiptap/extension-image";
+// import Link from "@tiptap/extension-link";
+// import Table from "@tiptap/extension-table";
 
+import { useState, useEffect } from "react";
+import { EditorContent, useEditor } from "@tiptap/react";
+import Showdown from "showdown";
 import TurndownService from "turndown";
+
+import ListItem from "./EditorExtensions/extension-list-item/src/index";
+import TextStyle from "./EditorExtensions/extension-text-style/src/index";
+import Image from "./EditorExtensions/extension-image/src/index";
+import Link from "./EditorExtensions/extension-link/src/index";
+import Table from "./EditorExtensions/extension-table/src/index";
+import TableRow from "./EditorExtensions/extension-table-row/src/index";
+import TableCell from "./EditorExtensions/extension-table-cell/src/index";
+import TableHeader from "./EditorExtensions/extension-table-header/src/index";
+import StarterKit from "@tiptap/starter-kit";
 import tables from "./table";
+
+import MenuBar from "./MenuBar";
 
 // const CustomTableCell = TableCell.extend({
 //   addAttributes() {
