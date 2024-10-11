@@ -27,10 +27,7 @@ export const tableHTML = `
 
 const MenuBar = ({ editor }) => {
   const [file, setFile] = useState(null);
-  const [fileName, setFileName] = useState("");
-
-  // Handle file selection
-  // const testConvert = () => {};
+  // const [fileName, setFileName] = useState("");
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -40,9 +37,7 @@ const MenuBar = ({ editor }) => {
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        console.log(reader.result);
-        // setFileData(reader.result);
-        // setFileName(reader.result);
+        // console.log(reader.result);
         editor
           .chain()
           .focus()
@@ -62,18 +57,6 @@ const MenuBar = ({ editor }) => {
     if (file) {
       // For demonstration, we'll log the file object
       console.log("File to upload:", file);
-
-      // Implement your upload logic here
-      // For example, you can use FormData to send the file to a server
-      // const formData = new FormData();
-      // formData.append('file', file);
-      // fetch('/upload-endpoint', {
-      //   method: 'POST',
-      //   body: formData,
-      // })
-      // .then(response => response.json())
-      // .then(data => console.log('Upload successful:', data))
-      // .catch(error => console.error('Upload error:', error));
     } else {
       alert("No file selected");
     }
@@ -104,8 +87,8 @@ const MenuBar = ({ editor }) => {
   }
 
   return (
-    <div className="control-group">
-      <div className="button-group">
+    <div className="control-group" style={{ marginBottom: "15px" }}>
+      <div className="button-group flex-wrap">
         <button
           onClick={() => {
             console.log("Bold");
@@ -254,12 +237,6 @@ const MenuBar = ({ editor }) => {
         >
           Toggle header cell
         </button>
-        <button
-          onClick={() => editor.chain().focus().mergeOrSplit().run()}
-          disabled={!editor.can().mergeOrSplit()}
-        >
-          Merge or split
-        </button>
 
         <button
           onClick={() => editor.chain().focus().fixTables().run()}
@@ -267,29 +244,17 @@ const MenuBar = ({ editor }) => {
         >
           Fix tables
         </button>
-        <button
-          onClick={() => editor.chain().focus().goToNextCell().run()}
-          disabled={!editor.can().goToNextCell()}
-        >
-          Go to next cell
+        <button className="remove-padding">
+          <label className="custom-style-tiptap">
+            <input
+              type="file"
+              onChange={handleFileChange}
+              accept="*/*" // You can specify MIME types here
+            />
+            Upload Image
+          </label>
         </button>
-        <button
-          onClick={() => editor.chain().focus().goToPreviousCell().run()}
-          disabled={!editor.can().goToPreviousCell()}
-        >
-          Go to previous cell
-        </button>
-        <button
-          onClick={() => {
-            const url = window.prompt("URL");
 
-            if (url) {
-              editor.chain().focus().setImage({ src: url }).run();
-            }
-          }}
-        >
-          Add image from URL
-        </button>
         <button
           onClick={handleSetLink}
           className={editor.isActive("link") ? "is-active" : ""}
@@ -301,27 +266,6 @@ const MenuBar = ({ editor }) => {
           disabled={!editor.isActive("link")}
         >
           Unset link
-        </button>
-      </div>
-      <div>
-        <button
-          onClick={() => {
-            const html = editor.getHTML();
-            console.log(html);
-
-            const JSON = editor.getJSON();
-            console.log(JSON);
-
-            const markdown = turndownService.turndown(html);
-            console.log(markdown);
-
-            converter.setOption("tables", true);
-            converter.setOption("parseImgDimensions", true);
-            const htmlFromMarkdown = converter.makeHtml(markdown);
-            console.log(htmlFromMarkdown);
-          }}
-        >
-          Save
         </button>
         <button
           onClick={() => editor.chain().focus().undo().run()}
@@ -336,16 +280,10 @@ const MenuBar = ({ editor }) => {
           Redo
         </button>
       </div>
-      <div>
-        <input
-          type="file"
-          onChange={handleFileChange}
-          accept="*/*" // You can specify MIME types here
-        />
-        <button onClick={handleUpload}>Upload</button>
-
+      {/* <div>
+        <button onClick={handleUpload}>Upload Files</button>
         {fileName && <p>Selected file: {fileName}</p>}
-      </div>
+      </div> */}
     </div>
   );
 };

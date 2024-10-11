@@ -8,7 +8,6 @@ import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import StarterKit from "@tiptap/starter-kit";
 import { EditorContent, useEditor } from "@tiptap/react";
-
 import MenuBar from "./MenuBar";
 import { useState, useEffect } from "react";
 import Showdown from "showdown";
@@ -16,24 +15,33 @@ import Showdown from "showdown";
 import TurndownService from "turndown";
 import tables from "./table";
 
-const CustomTableCell = TableCell.extend({
-  addAttributes() {
-    return {
-      // extend the existing attributes …
-      ...this.parent?.(),
+// const CustomTableCell = TableCell.extend({
+//   addAttributes() {
+//     return {
+//       // extend the existing attributes …
+//       ...this.parent?.(),
 
-      // and add a new one …
-      backgroundColor: {
-        default: null,
-        parseHTML: (element) => element.getAttribute("data-background-color"),
-        renderHTML: (attributes) => {
-          return {
-            "data-background-color": attributes.backgroundColor,
-            style: `background-color: ${attributes.backgroundColor}`,
-          };
-        },
-      },
-    };
+//       // and add a new one …
+//       backgroundColor: {
+//         default: null,
+//         parseHTML: (element) => element.getAttribute("data-background-color"),
+//         renderHTML: (attributes) => {
+//           console.log("asd", attributes);
+//           return {
+//             "data-background-color": attributes.backgroundColor,
+//             style: `background-color: ${attributes.backgroundColor}`,
+//           };
+//         },
+//       },
+//     };
+//   },
+// });
+
+// original table adds in colgroup into html.
+// this confuses the markdown converter and converts to markdown wrongly.
+const newTable = Table.extend({
+  renderHTML() {
+    return ["table", ["tbody", 0]];
   },
 });
 
@@ -41,12 +49,17 @@ function App() {
   const [content, setcontent] = useState("");
   const turndownService = new TurndownService();
   turndownService.use([tables]);
+  turndownService.addRule("strikethrough", {
+    filter: ["del", "s", "strike"],
+    replacement: (content) => `~~${content}~~`,
+  });
 
   const editor = useEditor({
     onUpdate({ editor }) {
       const newHtml = editor.getHTML();
       const newMD = turndownService.turndown(newHtml);
 
+      // console.log("print HTML and MD");
       console.log(newHtml);
       console.log(newMD);
       localStorage.setItem("editedMarkdown", newMD);
@@ -63,12 +76,15 @@ function App() {
           keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
         },
       }),
-      Table.configure({
-        resizable: true,
-      }),
+      // Table.configure({
+      //   resizable: true,
+      // }),
+      // Table,
+      newTable,
       TableRow,
       TableHeader,
-      CustomTableCell,
+      TableCell,
+      // CustomTableCell,
       Image,
       Link.configure({
         openOnClick: false,
