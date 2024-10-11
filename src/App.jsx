@@ -12,14 +12,15 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import Showdown from "showdown";
 import TurndownService from "turndown";
 
-import ListItem from "./EditorExtensions/extension-list-item/src/index";
-import TextStyle from "./EditorExtensions/extension-text-style/src/index";
-import Image from "./EditorExtensions/extension-image/src/index";
-import Link from "./EditorExtensions/extension-link/src/index";
-import Table from "./EditorExtensions/extension-table/src/index";
-import TableRow from "./EditorExtensions/extension-table-row/src/index";
-import TableCell from "./EditorExtensions/extension-table-cell/src/index";
-import TableHeader from "./EditorExtensions/extension-table-header/src/index";
+import ListItem from "./Extensions/extension-list-item/src/index";
+import Underline from "./Extensions/extension-underline/src/index";
+import TextStyle from "./Extensions/extension-text-style/src/index";
+import Image from "./Extensions/extension-image/src/index";
+import Link from "./Extensions/extension-link/src/index";
+import Table from "./Extensions/extension-table/src/index";
+import TableRow from "./Extensions/extension-table-row/src/index";
+import TableCell from "./Extensions/extension-table-cell/src/index";
+import TableHeader from "./Extensions/extension-table-header/src/index";
 import StarterKit from "@tiptap/starter-kit";
 import tables from "./table";
 
@@ -79,18 +80,19 @@ function App() {
       StarterKit.configure({
         bulletList: {
           keepMarks: true,
-          keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+          keepAttributes: false,
         },
         orderedList: {
           keepMarks: true,
-          keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+          keepAttributes: false,
         },
       }),
-      // Table.configure({
-      //   resizable: true,
-      // }),
+      Underline,
+      Table.configure({
+        resizable: true,
+      }),
       // Table,
-      newTable,
+      // newTable,
       TableRow,
       TableHeader,
       TableCell,

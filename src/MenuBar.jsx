@@ -100,6 +100,12 @@ const MenuBar = ({ editor }) => {
           Bold
         </button>
         <button
+          onClick={() => editor.chain().focus().toggleUnderline().run()}
+          className={editor.isActive("underline") ? "is-active" : ""}
+        >
+          Underline
+        </button>
+        <button
           onClick={() => {
             console.log("Italic");
             editor.chain().focus().toggleItalic().run();
@@ -109,6 +115,7 @@ const MenuBar = ({ editor }) => {
         >
           Italic
         </button>
+
         <button
           onClick={() => {
             console.log("Strike");
