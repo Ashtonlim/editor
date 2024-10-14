@@ -8,5 +8,6 @@ export default defineConfig({
   build: {
     // outDir: "../gedit/app/src/main/resources/out",
     // emptyOutDir: false,
+    sourcemap: true,
   },
 });
