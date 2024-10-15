@@ -106,82 +106,87 @@ const MenuBar = ({ editor }) => {
 
   return (
     <div>
-      <div id="jx">
-        <div className="flex">
-          <div
-            onClick={() => {
-              editor.chain().focus().toggleBold().run();
-            }}
-            disabled={!editor.can().chain().focus().toggleBold().run()}
-            className={`jxIcon flex-center ${
-              editor.isActive("bold") ? "is-active" : ""
-            }`}
-          >
-            <TextBold />
+      <div className="flex">
+        <div
+          className="flex border"
+          style={{ alignItems: "center", padding: "7px 0px" }}
+        >
+          <div className="border-right">
+            <div className="flex ">
+              <div
+                onClick={() => {
+                  editor.chain().focus().toggleBold().run();
+                }}
+                disabled={!editor.can().chain().focus().toggleBold().run()}
+                className={`jxIcon  ${
+                  editor.isActive("bold") ? "is-active" : ""
+                }`}
+              >
+                <TextBold />
+              </div>
+              <div
+                onClick={() => {
+                  editor.chain().focus().toggleItalic().run();
+                }}
+                disabled={!editor.can().chain().focus().toggleItalic().run()}
+                className={`jxIcon  ${
+                  editor.isActive("italic") ? "is-active" : ""
+                }`}
+              >
+                <TextItalics />
+              </div>
+              <div
+                onClick={() => editor.chain().focus().toggleUnderline().run()}
+                className={`jxIcon  ${
+                  editor.isActive("underline") ? "is-active" : ""
+                }`}
+              >
+                <TextUnderline />
+              </div>
+              <div
+                onClick={() => editor.chain().focus().toggleOrderedList().run()}
+                className={`jxIcon ${
+                  editor.isActive("orderedList") ? "is-active" : ""
+                }`}
+              >
+                <IndentOrderedList />
+              </div>
+              <div
+                onClick={() => editor.chain().focus().toggleBulletList().run()}
+                className={`jxIcon `}
+              >
+                <IndentUnorderedList />
+              </div>
+            </div>
           </div>
-          <div
-            onClick={() => {
-              editor.chain().focus().toggleItalic().run();
-            }}
-            disabled={!editor.can().chain().focus().toggleItalic().run()}
-            className={`jxIcon flex-center ${
-              editor.isActive("italic") ? "is-active" : ""
-            }`}
-          >
-            <TextItalics />
-          </div>
-          <div
-            onClick={() => editor.chain().focus().toggleUnderline().run()}
-            className={`jxIcon flex-center ${
-              editor.isActive("underline") ? "is-active" : ""
-            }`}
-          >
-            <TextUnderline />
-          </div>
-          <div
-            onClick={() => editor.chain().focus().toggleOrderedList().run()}
-            className={`jxIcon flex-center ${
-              editor.isActive("orderedList") ? "is-active" : ""
-            }`}
-          >
-            <IndentOrderedList />
-          </div>
-          <div
-            onClick={() => editor.chain().focus().toggleBulletList().run()}
-            className={`jxIcon flex-center ${
-              editor.isActive("bulletList") ? "is-active" : ""
-            }`}
-          >
-            <IndentUnorderedList />
-          </div>
-        </div>
 
-        <div className="flex">
-          <div className="remove-padding">
-            <label className="custom-style-tiptap jxIcon flex-center">
-              <AttachPicture />
-              <input
-                type="file"
-                onChange={handleFileChange}
-                accept="*/*" // You can specify MIME types here
-              />
-            </label>
-          </div>
-          <div
-            onClick={() =>
-              editor
-                .chain()
-                .focus()
-                .insertContent(tableHTML, {
-                  parseOptions: {
-                    preserveWhitespace: false,
-                  },
-                })
-                .run()
-            }
-            className="jxIcon flex-center"
-          >
-            <Table />
+          <div className="flex">
+            <div className="remove-padding">
+              <label className="custom-style-tiptap jxIcon ">
+                <AttachPicture />
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  accept="*/*" // You can specify MIME types here
+                />
+              </label>
+            </div>
+            <div
+              onClick={() =>
+                editor
+                  .chain()
+                  .focus()
+                  .insertContent(tableHTML, {
+                    parseOptions: {
+                      preserveWhitespace: false,
+                    },
+                  })
+                  .run()
+              }
+              className="jxIcon "
+            >
+              <Table />
+            </div>
           </div>
         </div>
 
@@ -193,42 +198,42 @@ const MenuBar = ({ editor }) => {
             <IndentDec />
           </div>
         </div>
-      </div>
-      <div className="flex">
-        <div
-          onClick={() => editor.chain().focus().toggleHeaderColumn().run()}
-          disabled={!editor.can().toggleHeaderColumn()}
-          className="jxIcon flex-center"
-        >
-          <TableToggleColHeader />
-        </div>
-        <div
-          onClick={() => editor.chain().focus().toggleHeaderRow().run()}
-          disabled={!editor.can().toggleHeaderRow()}
-          className="jxIcon flex-center"
-        >
-          <TableToggleRowHeader />
-        </div>
-        <div
-          onClick={() => editor.chain().focus().deleteTable().run()}
-          disabled={!editor.can().deleteTable()}
-          className="jxIcon flex-center"
-        >
-          <TableDelTable />
-        </div>
-        <div
-          onClick={() => editor.chain().focus().deleteRow().run()}
-          disabled={!editor.can().deleteRow()}
-          className="jxIcon flex-center"
-        >
-          <TableDelRow />
-        </div>
-        <div
-          onClick={() => editor.chain().focus().deleteColumn().run()}
-          disabled={!editor.can().deleteColumn()}
-          className="jxIcon flex-center"
-        >
-          <TableDelCol />
+        <div className="flex">
+          <div
+            onClick={() => editor.chain().focus().toggleHeaderColumn().run()}
+            disabled={!editor.can().toggleHeaderColumn()}
+            className="jxIcon flex-center"
+          >
+            <TableToggleColHeader />
+          </div>
+          <div
+            onClick={() => editor.chain().focus().toggleHeaderRow().run()}
+            disabled={!editor.can().toggleHeaderRow()}
+            className="jxIcon flex-center"
+          >
+            <TableToggleRowHeader />
+          </div>
+          <div
+            onClick={() => editor.chain().focus().deleteTable().run()}
+            disabled={!editor.can().deleteTable()}
+            className="jxIcon flex-center"
+          >
+            <TableDelTable />
+          </div>
+          <div
+            onClick={() => editor.chain().focus().deleteRow().run()}
+            disabled={!editor.can().deleteRow()}
+            className="jxIcon flex-center"
+          >
+            <TableDelRow />
+          </div>
+          <div
+            onClick={() => editor.chain().focus().deleteColumn().run()}
+            disabled={!editor.can().deleteColumn()}
+            className="jxIcon flex-center"
+          >
+            <TableDelCol />
+          </div>
         </div>
       </div>
       <div className="control-group" style={{ marginBottom: "15px" }}>

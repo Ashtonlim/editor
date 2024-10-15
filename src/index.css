@@ -4,7 +4,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  /* color: rgba(255, 255, 255, 0.87); */
+  color: rgba(255, 255, 255, 0.87);
   /* background-color: #242424; */
   background-color: #ececec !important;
 
@@ -18,6 +18,19 @@ html {
   background-color: red;
 }
 
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  /* min-width: 100%; */
+  width: 100%;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -25,14 +38,6 @@ a {
 }
 a:hover {
   color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
@@ -70,6 +75,77 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.border {
+  border: 2px solid rgb(207, 207, 207);
+  border-radius: 3px;
+}
+
+.border-right {
+  border-right: 2px solid rgb(207, 207, 207);
+}
+
+.remove-padding {
+  padding: 0px;
+}
+
+.custom-style-tiptap {
+  /* border-radius: 8px;
+  /* border: 1px solid transparent; */
+  /* padding: 0.6em 1.2em; */
+  /* font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.25s; */
+}
+.custom-style-tiptap:hover {
+  border-color: #646cff;
+}
+.custom-style-tiptap:focus,
+.custom-style-tiptap:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.custom-style-tiptap input[type="file"] {
+  display: none; /* Hide the default file input */
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 10px;
+  row-gap: 5px;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  /* column-gap: 5px; */
+}
+
+.jxIcon {
+  padding: 0px 4px;
+  margin: 0px 3px;
+  border-radius: 3px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+  align-items: center;
+  align-content: center;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.is-active {
+  background-color: darkgray;
 }
 
 /* ========== Tiptap ==========
@@ -215,58 +291,4 @@ table .column-resize-handle {
 .resize-cursor {
   cursor: ew-resize;
   cursor: col-resize;
-}
-
-.remove-padding {
-  padding: 0px;
-}
-
-.custom-style-tiptap {
-  /* border-radius: 8px;
-  /* border: 1px solid transparent; */
-  /* padding: 0.6em 1.2em; */
-  /* font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  transition: border-color 0.25s; */
-}
-.custom-style-tiptap:hover {
-  border-color: #646cff;
-}
-.custom-style-tiptap:focus,
-.custom-style-tiptap:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-.custom-style-tiptap input[type="file"] {
-  display: none; /* Hide the default file input */
-}
-
-.flex-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 10px;
-  row-gap: 5px;
-}
-
-.flex {
-  display: flex;
-  flex-direction: row;
-  /* column-gap: 5px; */
-}
-
-.jxIcon {
-  padding: 5px 7px;
-  border-radius: 3px;
-}
-
-.flex-center {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.is-active {
-  background-color: aliceblue;
 }

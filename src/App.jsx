@@ -125,13 +125,13 @@ function App() {
   }, []);
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <div style={{ width: "80%" }}>
-        <MenuBar editor={editor} />
-        <EditorContent editor={editor} />
-      </div>
-      {/* <div>{mdContent}</div> */}
+    <div>
+      <MenuBar editor={editor} />
+      <EditorContent editor={editor} />
     </div>
+    // <div style={{ display: "flex", justifyContent: "center" }}>
+
+    // </div>
   );
 }
 
