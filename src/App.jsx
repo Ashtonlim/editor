@@ -25,6 +25,51 @@ import StarterKit from "@tiptap/starter-kit";
 import tables from "./table";
 
 import MenuBar from "./MenuBar";
+import { mergeAttributes, Node } from "@tiptap/core";
+
+const Paragraph = Node.create({
+  name: "paragraph",
+
+  priority: 1000,
+
+  addOptions() {
+    return {
+      HTMLAttributes: {},
+    };
+  },
+
+  group: "block",
+
+  content: "inline*",
+
+  parseHTML() {
+    return [{ tag: "ol" }];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return [
+      "ol",
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+      0,
+    ];
+  },
+
+  addCommands() {
+    return {
+      setParagraph:
+        () =>
+        ({ commands }) => {
+          return commands.setNode(this.name);
+        },
+    };
+  },
+
+  // addKeyboardShortcuts() {
+  //   return {
+  //     "Mod-Alt-0": () => this.editor.commands.setParagraph(),
+  //   };
+  // },
+});
 
 // const CustomTableCell = TableCell.extend({
 //   addAttributes() {
@@ -96,6 +141,7 @@ function App() {
       TableRow,
       TableHeader,
       TableCell,
+      // Paragraph,
       // CustomTableCell,
       Image,
       Link.configure({

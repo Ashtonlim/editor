@@ -23,22 +23,14 @@ export const tableHTML = `
     <tr>
       <th>Firstname</th>
       <th>Lastname</th>
-      <th>Age</th>
     </tr>
     <tr>
       <td>Jill</td>
       <td>Smith</td>
-      <td>50</td>
-    </tr>
-    <tr>
-      <td>Eve</td>
-      <td>Jackson</td>
-      <td>94</td>
     </tr>
     <tr>
       <td>John</td>
       <td>Doe</td>
-      <td>80</td>
     </tr>
   </table>
 `;
@@ -105,58 +97,53 @@ const MenuBar = ({ editor }) => {
   }
 
   return (
-    <div>
-      <div className="flex">
-        <div
-          className="flex border"
-          style={{ alignItems: "center", padding: "7px 0px" }}
-        >
-          <div className="border-right">
-            <div className="flex ">
-              <div
-                onClick={() => {
-                  editor.chain().focus().toggleBold().run();
-                }}
-                disabled={!editor.can().chain().focus().toggleBold().run()}
-                className={`jxIcon  ${
-                  editor.isActive("bold") ? "is-active" : ""
-                }`}
-              >
-                <TextBold />
-              </div>
-              <div
-                onClick={() => {
-                  editor.chain().focus().toggleItalic().run();
-                }}
-                disabled={!editor.can().chain().focus().toggleItalic().run()}
-                className={`jxIcon  ${
-                  editor.isActive("italic") ? "is-active" : ""
-                }`}
-              >
-                <TextItalics />
-              </div>
-              <div
-                onClick={() => editor.chain().focus().toggleUnderline().run()}
-                className={`jxIcon  ${
-                  editor.isActive("underline") ? "is-active" : ""
-                }`}
-              >
-                <TextUnderline />
-              </div>
-              <div
-                onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                className={`jxIcon ${
-                  editor.isActive("orderedList") ? "is-active" : ""
-                }`}
-              >
-                <IndentOrderedList />
-              </div>
-              <div
-                onClick={() => editor.chain().focus().toggleBulletList().run()}
-                className={`jxIcon `}
-              >
-                <IndentUnorderedList />
-              </div>
+    <div className="">
+      <div className="flex" style={{ justifyContent: "space-between" }}>
+        <div className="flex border" style={{ padding: "7px 0px" }}>
+          <div className="flex border-right">
+            <div
+              onClick={() => {
+                editor.chain().focus().toggleBold().run();
+              }}
+              disabled={!editor.can().chain().focus().toggleBold().run()}
+              className={`jxIcon  ${
+                editor.isActive("bold") ? "is-active" : ""
+              }`}
+            >
+              <TextBold />
+            </div>
+            <div
+              onClick={() => {
+                editor.chain().focus().toggleItalic().run();
+              }}
+              disabled={!editor.can().chain().focus().toggleItalic().run()}
+              className={`jxIcon  ${
+                editor.isActive("italic") ? "is-active" : ""
+              }`}
+            >
+              <TextItalics />
+            </div>
+            <div
+              onClick={() => editor.chain().focus().toggleUnderline().run()}
+              className={`jxIcon  ${
+                editor.isActive("underline") ? "is-active" : ""
+              }`}
+            >
+              <TextUnderline />
+            </div>
+            <div
+              onClick={() => editor.chain().focus().toggleOrderedList().run()}
+              className={`jxIcon ${
+                editor.isActive("orderedList") ? "is-active" : ""
+              }`}
+            >
+              <IndentOrderedList />
+            </div>
+            <div
+              onClick={() => editor.chain().focus().toggleBulletList().run()}
+              className={`jxIcon `}
+            >
+              <IndentUnorderedList />
             </div>
           </div>
 
@@ -190,52 +177,64 @@ const MenuBar = ({ editor }) => {
           </div>
         </div>
 
-        <div className="flex">
-          <div className="jxIcon flex-center">
-            <IndentInc />
+        {/* {(editor.isActive("bulletList") || editor.isActive("orderedList")) && (
+          <div className="flex border" style={{ padding: "7px 0px" }}>
+            <div
+              onClick={() => editor.chain().focus().indent().run()}
+              className={`jxIcon `}
+            >
+              <IndentInc />
+            </div>
+            <div
+              onClick={() => editor.chain().focus().indent().run()}
+              className={`jxIcon `}
+            >
+              <IndentDec />
+            </div>
           </div>
-          <div className="jxIcon flex-center">
-            <IndentDec />
+        )} */}
+
+        {editor.can().deleteTable() && (
+          <div className="flex border" style={{ padding: "7px 0px" }}>
+            <div
+              onClick={() => editor.chain().focus().deleteTable().run()}
+              disabled={!editor.can().deleteTable()}
+              className="jxIcon"
+            >
+              <TableDelTable />
+            </div>
+            <div
+              onClick={() => editor.chain().focus().toggleHeaderColumn().run()}
+              disabled={!editor.can().toggleHeaderColumn()}
+              className="jxIcon"
+            >
+              <TableToggleColHeader />
+            </div>
+            <div
+              onClick={() => editor.chain().focus().toggleHeaderRow().run()}
+              disabled={!editor.can().toggleHeaderRow()}
+              className="jxIcon"
+            >
+              <TableToggleRowHeader />
+            </div>
+            <div
+              onClick={() => editor.chain().focus().deleteColumn().run()}
+              disabled={!editor.can().deleteColumn()}
+              className="jxIcon flex-center"
+            >
+              <TableDelCol />
+            </div>
+            <div
+              onClick={() => editor.chain().focus().deleteRow().run()}
+              disabled={!editor.can().deleteRow()}
+              className="jxIcon flex-center"
+            >
+              <TableDelRow />
+            </div>
           </div>
-        </div>
-        <div className="flex">
-          <div
-            onClick={() => editor.chain().focus().toggleHeaderColumn().run()}
-            disabled={!editor.can().toggleHeaderColumn()}
-            className="jxIcon flex-center"
-          >
-            <TableToggleColHeader />
-          </div>
-          <div
-            onClick={() => editor.chain().focus().toggleHeaderRow().run()}
-            disabled={!editor.can().toggleHeaderRow()}
-            className="jxIcon flex-center"
-          >
-            <TableToggleRowHeader />
-          </div>
-          <div
-            onClick={() => editor.chain().focus().deleteTable().run()}
-            disabled={!editor.can().deleteTable()}
-            className="jxIcon flex-center"
-          >
-            <TableDelTable />
-          </div>
-          <div
-            onClick={() => editor.chain().focus().deleteRow().run()}
-            disabled={!editor.can().deleteRow()}
-            className="jxIcon flex-center"
-          >
-            <TableDelRow />
-          </div>
-          <div
-            onClick={() => editor.chain().focus().deleteColumn().run()}
-            disabled={!editor.can().deleteColumn()}
-            className="jxIcon flex-center"
-          >
-            <TableDelCol />
-          </div>
-        </div>
+        )}
       </div>
+
       <div className="control-group" style={{ marginBottom: "15px" }}>
         <div className="button-group flex-wrap">
           <button
@@ -248,6 +247,12 @@ const MenuBar = ({ editor }) => {
           >
             Strike
           </button>
+          {/* <button
+            onClick={() => editor.chain().focus().setParagraph().run()}
+            className={editor.isActive("paragraph") ? "is-active" : ""}
+          >
+            Paragraph
+          </button> */}
 
           <button
             onClick={() => editor.chain().focus().addColumnBefore().run()}
@@ -274,62 +279,7 @@ const MenuBar = ({ editor }) => {
           >
             Add row after
           </button>
-          {/* <button className="remove-padding">
-            <label className="custom-style-tiptap">
-              <input type="file" onChange={handleFileChange} />
-              Upload Image
-            </label>
-          </button> */}
-
-          {/* <button
-            onClick={() => editor.chain().focus().mergeCells().run()}
-            disabled={!editor.can().mergeCells()}
-          >
-            Merge cells
-          </button>
-          <button
-            onClick={() => editor.chain().focus().splitCell().run()}
-            disabled={!editor.can().splitCell()}
-          >
-            Split cell
-          </button>
-
-          <button
-            onClick={() => editor.chain().focus().fixTables().run()}
-            disabled={!editor.can().fixTables()}
-          >
-            Fix tables
-          </button> */}
-
-          {/* <button
-            onClick={handleSetLink}
-            className={editor.isActive("link") ? "is-active" : ""}
-          >
-            Set link
-          </button>
-          <button
-            onClick={() => editor.chain().focus().unsetLink().run()}
-            disabled={!editor.isActive("link")}
-          >
-            Unset link
-          </button> */}
-          {/* <button
-            onClick={() => editor.chain().focus().undo().run()}
-            disabled={!editor.can().chain().focus().undo().run()}
-          >
-            Undo
-          </button>
-          <button
-            onClick={() => editor.chain().focus().redo().run()}
-            disabled={!editor.can().chain().focus().redo().run()}
-          >
-            Redo
-          </button> */}
         </div>
-        {/* <div>
-        <button onClick={handleUpload}>Upload Files</button>
-        {fileName && <p>Selected file: {fileName}</p>}
-      </div> */}
       </div>
     </div>
   );

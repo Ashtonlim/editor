@@ -136,6 +136,7 @@ button:focus-visible {
   vertical-align: middle;
   align-items: center;
   align-content: center;
+  cursor: pointer;
 }
 
 .flex-center {
