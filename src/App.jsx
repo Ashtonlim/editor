@@ -25,51 +25,7 @@ import StarterKit from "@tiptap/starter-kit";
 import tables from "./table";
 
 import MenuBar from "./MenuBar";
-import { mergeAttributes, Node } from "@tiptap/core";
-
-const Paragraph = Node.create({
-  name: "paragraph",
-
-  priority: 1000,
-
-  addOptions() {
-    return {
-      HTMLAttributes: {},
-    };
-  },
-
-  group: "block",
-
-  content: "inline*",
-
-  parseHTML() {
-    return [{ tag: "ol" }];
-  },
-
-  renderHTML({ HTMLAttributes }) {
-    return [
-      "ol",
-      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
-      0,
-    ];
-  },
-
-  addCommands() {
-    return {
-      setParagraph:
-        () =>
-        ({ commands }) => {
-          return commands.setNode(this.name);
-        },
-    };
-  },
-
-  // addKeyboardShortcuts() {
-  //   return {
-  //     "Mod-Alt-0": () => this.editor.commands.setParagraph(),
-  //   };
-  // },
-});
+// import { mergeAttributes, Node } from "@tiptap/core";
 
 // const CustomTableCell = TableCell.extend({
 //   addAttributes() {
@@ -95,11 +51,11 @@ const Paragraph = Node.create({
 
 // original table adds in colgroup into html.
 // this confuses the markdown converter and converts to markdown wrongly.
-const newTable = Table.extend({
-  renderHTML() {
-    return ["table", ["tbody", 0]];
-  },
-});
+// const newTable = Table.extend({
+//   renderHTML() {
+//     return ["table", ["tbody", 0]];
+//   },
+// });
 
 function App() {
   const [content, setcontent] = useState("");
@@ -143,7 +99,7 @@ function App() {
       TableCell,
       // Paragraph,
       // CustomTableCell,
-      Image,
+      Image.configure({ inline: true, allowBase64: true }),
       Link.configure({
         openOnClick: false,
         autolink: true,
@@ -163,10 +119,10 @@ function App() {
 
     const mdAsHtml = converter.makeHtml(injectedMarkdown);
 
-    console.log(injectedMarkdown);
-    console.log(mdAsHtml);
+    console.log("injectedMarkdown", injectedMarkdown);
+    console.log("mdAsHtml", mdAsHtml);
 
-    setcontent(mdAsHtml);
+    setcontent(() => mdAsHtml);
     editor.commands.setContent(mdAsHtml);
   }, []);
 
@@ -175,9 +131,6 @@ function App() {
       <MenuBar editor={editor} />
       <EditorContent editor={editor} />
     </div>
-    // <div style={{ display: "flex", justifyContent: "center" }}>
-
-    // </div>
   );
 }
 
