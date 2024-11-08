@@ -12,11 +12,17 @@ import IndentDec from "./Icons/IndentDec";
 import TableToggleColHeader from "./Icons/TableToggleColHeader";
 import TableToggleRowHeader from "./Icons/TableToggleRowHeader";
 
+import AddColumnLeft from "./Icons/AddColumnLeft";
+import AddColumnRight from "./Icons/AddColumnRight";
+import AddRowTop from "./Icons/AddRowTop";
+import AddRowBottom from "./Icons/AddRowBottom";
+
 import TableDelTable from "./Icons/TableDelTable";
 import TableDelRow from "./Icons/TableDelRow";
 import TableDelCol from "./Icons/TableDelCol";
 
 import AttachPicture from "./Icons/AttachPicture";
+import TextStrikethrough from "./Icons/TextStrikethrough";
 
 export const tableHTML = `
   <table style="width:100%">
@@ -41,34 +47,24 @@ const MenuBar = ({ editor }) => {
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
-    console.log(selectedFile);
-    console.log("handle", event.target);
+    // console.log(selectedFile);
+    // console.log("handle", event.target);
     if (selectedFile) {
       const reader = new FileReader();
+      const blobUrl = URL.createObjectURL(selectedFile);
+      editor
+        .chain()
+        .focus()
+        .setImage({
+          src: blobUrl,
+        })
+        .run();
 
-      reader.onloadend = () => {
-        // console.log(reader.result);
-        editor
-          .chain()
-          .focus()
-          .setImage({
-            src: reader.result,
-          })
-          .run();
-      };
+      // reader.onloadend = () => {
+      // };
 
       // Read the file as Data URL (base64 encoded)
       reader.readAsDataURL(selectedFile);
-    }
-  };
-
-  // Handle file upload
-  const handleUpload = () => {
-    if (file) {
-      // For demonstration, we'll log the file object
-      console.log("File to upload:", file);
-    } else {
-      alert("No file selected");
     }
   };
 
@@ -111,6 +107,15 @@ const MenuBar = ({ editor }) => {
               }`}
             >
               <TextBold />
+            </div>
+            <div
+              onClick={() => {
+                console.log("Strike");
+                editor.chain().focus().toggleStrike().run();
+              }}
+              disabled={!editor.can().chain().focus().toggleStrike().run()}
+            >
+              <TextStrikethrough />
             </div>
             <div
               onClick={() => {
@@ -194,8 +199,58 @@ const MenuBar = ({ editor }) => {
           </div>
         )} */}
 
+        {/* <button
+          
+        >
+          Add column before
+        </button>
+        <button
+          
+        >
+          Add column after
+        </button>
+
+        <button
+          
+        >
+          Add row before
+        </button>
+        <button
+          
+        >
+          Add row after
+        </button> */}
+
         {editor.can().deleteTable() && (
           <div className="flex border" style={{ padding: "7px 0px" }}>
+            <div
+              onClick={() => editor.chain().focus().addColumnBefore().run()}
+              disabled={!editor.can().addColumnBefore()}
+              className="jxIcon"
+            >
+              <AddColumnLeft />
+            </div>
+            <div
+              onClick={() => editor.chain().focus().addColumnAfter().run()}
+              disabled={!editor.can().addColumnAfter()}
+              className="jxIcon"
+            >
+              <AddColumnRight />
+            </div>
+            <div
+              onClick={() => editor.chain().focus().addRowBefore().run()}
+              disabled={!editor.can().addRowBefore()}
+              className="jxIcon"
+            >
+              <AddRowTop />
+            </div>
+            <div
+              onClick={() => editor.chain().focus().addRowAfter().run()}
+              disabled={!editor.can().addRowAfter()}
+              className="jxIcon"
+            >
+              <AddRowBottom />
+            </div>
             <div
               onClick={() => editor.chain().focus().deleteTable().run()}
               disabled={!editor.can().deleteTable()}
@@ -237,7 +292,7 @@ const MenuBar = ({ editor }) => {
 
       <div className="control-group" style={{ marginBottom: "15px" }}>
         <div className="button-group flex-wrap">
-          <button
+          {/* <button
             onClick={() => {
               console.log("Strike");
               editor.chain().focus().toggleStrike().run();
@@ -245,40 +300,14 @@ const MenuBar = ({ editor }) => {
             disabled={!editor.can().chain().focus().toggleStrike().run()}
             className={editor.isActive("strike") ? "is-active" : ""}
           >
-            Strike
-          </button>
+            <TextStrikethrough />
+          </button> */}
           {/* <button
             onClick={() => editor.chain().focus().setParagraph().run()}
             className={editor.isActive("paragraph") ? "is-active" : ""}
           >
             Paragraph
           </button> */}
-
-          <button
-            onClick={() => editor.chain().focus().addColumnBefore().run()}
-            disabled={!editor.can().addColumnBefore()}
-          >
-            Add column before
-          </button>
-          <button
-            onClick={() => editor.chain().focus().addColumnAfter().run()}
-            disabled={!editor.can().addColumnAfter()}
-          >
-            Add column after
-          </button>
-
-          <button
-            onClick={() => editor.chain().focus().addRowBefore().run()}
-            disabled={!editor.can().addRowBefore()}
-          >
-            Add row before
-          </button>
-          <button
-            onClick={() => editor.chain().focus().addRowAfter().run()}
-            disabled={!editor.can().addRowAfter()}
-          >
-            Add row after
-          </button>
         </div>
       </div>
     </div>

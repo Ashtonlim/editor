@@ -60,6 +60,7 @@ import MenuBar from "./MenuBar";
 function App() {
   const [content, setcontent] = useState("");
   const turndownService = new TurndownService();
+
   turndownService.use([tables]);
   turndownService.addRule("strikethrough", {
     filter: ["del", "s", "strike"],
@@ -67,15 +68,6 @@ function App() {
   });
 
   const editor = useEditor({
-    onUpdate({ editor }) {
-      const newHtml = editor.getHTML();
-      const newMD = turndownService.turndown(newHtml);
-
-      // console.log("print HTML and MD");
-      console.log(newHtml);
-      console.log(newMD);
-      localStorage.setItem("editedMarkdown", newMD);
-    },
     extensions: [
       TextStyle.configure({ types: [ListItem.name] }),
       StarterKit.configure({
@@ -114,16 +106,41 @@ function App() {
     converter.setOption("tables", true);
     converter.setOption("parseImgDimensions", true);
 
-    const injectedMarkdown = localStorage.getItem("injectedMarkdown");
-    localStorage.setItem("editedMarkdown", injectedMarkdown);
+    window.putContentIntoEditor = (injectedMarkdown) => {
+      // const injectedMarkdown = localStorage.getItem("injectedMarkdown");
+      // localStorage.setItem("editedMarkdown", injectedMarkdown);
+      const mdAsHtml = converter.makeHtml(injectedMarkdown);
+      setcontent(mdAsHtml);
+      editor.commands.setContent(mdAsHtml);
+      return true;
+    };
 
-    const mdAsHtml = converter.makeHtml(injectedMarkdown);
+    window.setIntoLocalStorage = () => {
+      const newHtml = editor.getHTML();
+      const newMD = turndownService.turndown(newHtml);
+      localStorage.setItem("editedMarkdown", newMD);
+      console.log("HTML and placed MD");
+      console.log(newHtml);
+      console.log(newMD);
+      return newMD;
+    };
 
-    console.log("injectedMarkdown", injectedMarkdown);
-    console.log("mdAsHtml", mdAsHtml);
+    window.debugConvert = () => {
+      const newHtml = editor.getHTML();
+      const newMD = turndownService.turndown(newHtml);
+      console.log("print HTML and MD");
+      console.log(newHtml);
+      console.log(newMD);
+    };
 
-    setcontent(() => mdAsHtml);
-    editor.commands.setContent(mdAsHtml);
+    // console.log("injectedMarkdown", injectedMarkdown);
+    // console.log("mdAsHtml", mdAsHtml);
+
+    // Clean up on unmount
+    return () => {
+      delete window.setIntoLocalStorage;
+      delete window.debugConvert;
+    };
   }, []);
 
   return (
