@@ -42,58 +42,43 @@ export const tableHTML = `
 `;
 
 const MenuBar = ({ editor }) => {
-  const [file, setFile] = useState(null);
-  // const [fileName, setFileName] = useState("");
-
+  const [dangerText, setdangerText] = useState("");
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     // console.log(selectedFile);
     // console.log("handle", event.target);
     if (selectedFile) {
       const reader = new FileReader();
-      const blobUrl = URL.createObjectURL(selectedFile);
-      editor
-        .chain()
-        .focus()
-        .setImage({
-          src: blobUrl,
-        })
-        .run();
 
-      // reader.onloadend = () => {
-      // };
+      const fileSizeInMB = selectedFile.size / (1024 * 1024); // Convert file size to MB
+
+      if (fileSizeInMB > 0) {
+        // alert("File size should be less than 2MB.");
+        setdangerText("file size too big");
+        return; // Exit the function if the file size is too large
+      }
+
+      reader.onloadend = () => {
+        editor
+          .chain()
+          .focus()
+          .setImage({
+            src: reader.result,
+          })
+          .run();
+      };
 
       // Read the file as Data URL (base64 encoded)
       reader.readAsDataURL(selectedFile);
     }
   };
 
-  const handleSetLink = useCallback(() => {
-    const previousUrl = editor.getAttributes("link").href;
-    const url = window.prompt("URL", previousUrl);
-
-    // cancelled
-    if (url === null) {
-      return;
-    }
-
-    // empty
-    if (url === "") {
-      editor.chain().focus().extendMarkRange("link").unsetLink().run();
-
-      return;
-    }
-
-    // update link
-    editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
-  }, [editor]);
-
   if (!editor) {
     return null;
   }
 
   return (
-    <div className="">
+    <div className="sticky-top">
       <div className="flex" style={{ justifyContent: "space-between" }}>
         <div className="flex border" style={{ padding: "7px 0px" }}>
           <div className="flex border-right">
@@ -199,28 +184,6 @@ const MenuBar = ({ editor }) => {
           </div>
         )} */}
 
-        {/* <button
-          
-        >
-          Add column before
-        </button>
-        <button
-          
-        >
-          Add column after
-        </button>
-
-        <button
-          
-        >
-          Add row before
-        </button>
-        <button
-          
-        >
-          Add row after
-        </button> */}
-
         {editor.can().deleteTable() && (
           <div className="flex border" style={{ padding: "7px 0px" }}>
             <div
@@ -289,27 +252,14 @@ const MenuBar = ({ editor }) => {
           </div>
         )}
       </div>
-
-      <div className="control-group" style={{ marginBottom: "15px" }}>
-        <div className="button-group flex-wrap">
-          {/* <button
-            onClick={() => {
-              console.log("Strike");
-              editor.chain().focus().toggleStrike().run();
-            }}
-            disabled={!editor.can().chain().focus().toggleStrike().run()}
-            className={editor.isActive("strike") ? "is-active" : ""}
-          >
-            <TextStrikethrough />
-          </button> */}
-          {/* <button
-            onClick={() => editor.chain().focus().setParagraph().run()}
-            className={editor.isActive("paragraph") ? "is-active" : ""}
-          >
-            Paragraph
-          </button> */}
+      {dangerText && (
+        <div className="danger-text">
+          <div>{dangerText}</div>
+          <button className="close-btn" onClick={() => setdangerText("")}>
+            ×
+          </button>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -14,17 +14,47 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-html {
+/* html {
   background-color: red;
-}
+} */
 
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  place-items: top;
   /* min-width: 100%; */
   width: 100%;
   min-height: 100vh;
+  overflow: hidden;
+  /* position: relative; */
+}
+
+.handle-scroll {
+  width: 100%;
+  height: 300px;
+  max-height: 400px;
+  overflow-y: scroll;
+  /* scrollbar-width: none; */
+  /* box-sizing: border-box; */
+}
+
+.ProseMirror:focus {
+  outline: none;
+}
+
+/* .handle-scroll:hover {
+  overflow-y: auto;
+} */
+
+.sticky-top {
+  position: sticky;
+  top: 0;
+  background-color: #ececec !important;
+  margin-bottom: 5px;
+  padding-bottom: 10px;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+
+  z-index: 100;
 }
 
 #root {
@@ -292,4 +322,40 @@ table .column-resize-handle {
 .resize-cursor {
   cursor: ew-resize;
   cursor: col-resize;
+}
+
+/* Danger text styling */
+.danger-text {
+  color: #b64336;
+  background-color: #f8d7da;
+  border: 1px solid #e74c3c;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 20%;
+  margin: 10px 0;
+}
+
+.danger-text .close-btn {
+  background: none;
+  border: none;
+  color: #e74c3c; /* Red color for the cross */
+  font-size: 20px;
+  cursor: pointer; /* Pointer cursor to indicate it’s clickable */
+  padding: 5px;
+  /* margin: 15px; */
+}
+
+/* Optional: Tooltip or additional effect */
+.danger-text:hover {
+  background-color: #f5c6cb;
+  cursor: pointer;
+}
+
+.danger-text .close-btn:hover {
+  color: #c0392b;
 }

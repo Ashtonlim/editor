@@ -51,11 +51,11 @@ import MenuBar from "./MenuBar";
 
 // original table adds in colgroup into html.
 // this confuses the markdown converter and converts to markdown wrongly.
-// const newTable = Table.extend({
-//   renderHTML() {
-//     return ["table", ["tbody", 0]];
-//   },
-// });
+const newTable = Table.extend({
+  renderHTML() {
+    return ["table", ["tbody", 0]];
+  },
+});
 
 function App() {
   const [content, setcontent] = useState("");
@@ -68,6 +68,15 @@ function App() {
   });
 
   const editor = useEditor({
+    onUpdate({ editor }) {
+      // The content has changed.
+      const newHtml = editor.getHTML();
+      const newMD = turndownService.turndown(newHtml);
+      localStorage.setItem("editedMarkdown", newMD);
+      console.log("HTML and placed MD");
+      console.log(newHtml);
+      console.log(newMD);
+    },
     extensions: [
       TextStyle.configure({ types: [ListItem.name] }),
       StarterKit.configure({
@@ -81,14 +90,12 @@ function App() {
         },
       }),
       Underline,
-      Table.configure({
-        resizable: true,
-      }),
-      // Table,
-      // newTable,
       TableRow,
       TableHeader,
       TableCell,
+      newTable.configure({
+        resizable: true,
+      }),
       // Paragraph,
       // CustomTableCell,
       Image.configure({ inline: true, allowBase64: true }),
@@ -146,7 +153,7 @@ function App() {
   return (
     <div>
       <MenuBar editor={editor} />
-      <EditorContent editor={editor} />
+      <EditorContent className="handle-scroll" editor={editor} />
     </div>
   );
 }
